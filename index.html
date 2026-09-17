@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Evadarea Magică — Escape Room pentru clasele I–IV</title>
+<meta name="description" content="Zece camere de evadare ilustrate plus un mod aleatoriu, cu ghicitori, calcule matematice și întrebări de cultură generală pentru copii de clasele I–IV.">
+<meta name="theme-color" content="#1b1040">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@400;600;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/styles.css">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%237c3aed'/%3E%3Ccircle cx='26' cy='26' r='11' fill='none' stroke='%23fbbf24' stroke-width='6'/%3E%3Cpath d='M33 33 L50 50 M44 44 l6 -6 M50 50 l5 -5' stroke='%23fbbf24' stroke-width='6' stroke-linecap='round'/%3E%3C/svg%3E">
+</head>
+<body>
+
+<noscript>
+  <div class="noscript">Acest joc are nevoie de JavaScript activat în browser. Te rugăm să îl activezi și să reîncarci pagina.</div>
+</noscript>
+
+<div id="app" class="app">
+
+  <!-- ============================ ECRANUL DE START ============================ -->
+  <section id="screen-start" class="screen is-active" aria-label="Ecran de start">
+    <div class="stars-bg" aria-hidden="true"></div>
+
+    <div class="start-wrap">
+      <div class="logo-block">
+        <div class="logo-art" id="logo-art" aria-hidden="true"></div>
+        <h1 class="title">Evadarea <span>Magică</span></h1>
+        <p class="tagline">10 camere secrete &nbsp;•&nbsp; 5 camere misterioase &nbsp;•&nbsp; sute de ghicitori, calcule și întrebări</p>
+      </div>
+
+      <div class="panel start-panel">
+        <label class="field">
+          <span class="field-label">Cum te cheamă, exploratorule?</span>
+          <input type="text" id="input-name" class="text-input" maxlength="22" placeholder="Scrie numele tău aici" autocomplete="off" spellcheck="false">
+        </label>
+
+        <div class="field">
+          <span class="field-label">În ce clasă ești?</span>
+          <div class="level-grid" id="level-grid" role="radiogroup" aria-label="Alege nivelul">
+            <button class="level-card" data-level="1" role="radio" aria-checked="false">
+              <span class="level-emoji">🐣</span>
+              <span class="level-name">Clasa I–II</span>
+              <span class="level-desc">Numere mici, adunări și scăderi, ghicitori vesele</span>
+            </button>
+            <button class="level-card" data-level="2" role="radio" aria-checked="true">
+              <span class="level-emoji">🦊</span>
+              <span class="level-name">Clasa a III-a</span>
+              <span class="level-desc">Tabla înmulțirii, împărțiri, întrebări mai isteţe</span>
+            </button>
+            <button class="level-card" data-level="3" role="radio" aria-checked="false">
+              <span class="level-emoji">🦉</span>
+              <span class="level-name">Clasa a IV-a</span>
+              <span class="level-desc">Numere mari, mai mulți pași, provocări adevărate</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="field">
+          <span class="field-label">Cât de lungă să fie o cameră?</span>
+          <div class="level-grid" id="size-grid" role="radiogroup" aria-label="Alege numărul de probe">
+            <button class="level-card" data-size="4" role="radio" aria-checked="true">
+              <span class="level-emoji">🐇</span>
+              <span class="level-name">Scurtă</span>
+              <span class="level-desc">4 probe și un lacăt</span>
+            </button>
+            <button class="level-card" data-size="8" role="radio" aria-checked="false">
+              <span class="level-emoji">🦊</span>
+              <span class="level-name">Medie</span>
+              <span class="level-desc">8 probe și 2 lacăte</span>
+            </button>
+            <button class="level-card" data-size="12" role="radio" aria-checked="false">
+              <span class="level-emoji">🐢</span>
+              <span class="level-name">Lungă</span>
+              <span class="level-desc">12 probe și 3 lacăte</span>
+            </button>
+          </div>
+        </div>
+
+        <button class="btn btn-huge btn-primary" id="btn-start">
+          <span>Începe aventura</span> <span class="btn-ico">🗝️</span>
+        </button>
+
+        <button class="btn btn-ghost btn-small" id="btn-how">Cum se joacă?</button>
+      </div>
+
+      <div class="how-box" id="how-box" hidden>
+        <h2>Cum se joacă</h2>
+        <ol>
+          <li><b>Alege o cameră</b> de pe hartă. În fiecare cameră sunt ascunse <b>4 obiecte</b> cu probe — nu îți spune nimeni care sunt, le cauți tu, atingând ce ți se pare interesant.</li>
+          <li><b>Rezolvă proba</b>: un calcul, o ghicitoare, un seif al cărui disc îl rotești tu, o balanță pe care o echilibrezi, manete pe care le tragi…</li>
+          <li>Fiecare probă rezolvată îți dă <b>o cifră</b> din codul lacătului.</li>
+          <li>Când ai <b>4 cifre</b>, apasă pe ușă și învârte rolele lacătului până apare codul.</li>
+          <li>La început alegi cât de lungă e camera: <b>4 probe</b> (un lacăt), <b>8</b> (două lacăte) sau <b>12</b> (trei lacăte). Ușa se deschide după ultimul lacăt. 🎉</li>
+          <li>Te-ai blocat? Butonul <b>🔍</b> din cameră îți arată câteva secunde unde sunt obiectele, iar <b>💡 Indiciu</b> te ajută la probă (dar îți poate lua o stea).</li>
+        </ol>
+        <p class="how-note">Poți juca de pe telefon, tabletă sau calculator. Progresul se salvează automat pe acest dispozitiv.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ HARTA CAMERELOR ============================ -->
+  <section id="screen-map" class="screen" aria-label="Harta camerelor">
+    <div class="stars-bg" aria-hidden="true"></div>
+
+    <header class="topbar">
+      <div class="topbar-left">
+        <div class="avatar" id="map-avatar">🙂</div>
+        <div class="who">
+          <div class="who-name" id="map-name">Explorator</div>
+          <div class="who-chips">
+            <button class="who-level chip" id="btn-change-level" title="Schimbă nivelul">Clasa a III-a ▾</button>
+            <button class="who-level chip" id="btn-change-size" title="Schimbă numărul de probe dintr-o cameră">4 probe ▾</button>
+          </div>
+        </div>
+      </div>
+      <div class="topbar-right">
+        <div class="chip chip-star" title="Stele adunate"><span class="chip-ico">⭐</span> <span id="map-stars">0</span> / 303</div>
+        <button class="icon-btn" id="btn-mute" title="Sunet pornit/oprit" aria-label="Sunet">🔊</button>
+        <button class="icon-btn" id="btn-reset" title="Șterge progresul" aria-label="Șterge progresul">♻️</button>
+      </div>
+    </header>
+
+    <div class="map-wrap">
+      <h2 class="map-title">Alege o lume, apoi o cameră</h2>
+      <p class="map-sub">100 de camere în 10 lumi. Poți juca în orice ordine. <span id="map-progress-txt"></span></p>
+      <div class="world-tabs" id="world-tabs" role="tablist" aria-label="Lumile jocului"></div>
+      <p class="world-desc" id="world-desc"></p>
+      <div class="room-grid" id="room-grid"></div>
+
+      <div class="diploma-cta">
+        <button class="btn btn-gold" id="btn-diploma">🏆 Vezi diploma mea</button>
+        <button class="btn btn-ghost" id="btn-code">🔑 Joacă un cod de cameră</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ CAMERA DE JOC ============================ -->
+  <section id="screen-room" class="screen" aria-label="Camera de evadare">
+    <header class="roombar">
+      <button class="icon-btn" id="btn-back" title="Înapoi la hartă" aria-label="Înapoi la hartă">←</button>
+      <div class="roombar-title">
+        <span class="room-emoji" id="room-emoji">🔺</span>
+        <span>
+          <b id="room-name">Camera</b>
+          <i id="room-sub">subtitlu</i>
+        </span>
+      </div>
+      <div class="roombar-right">
+        <div class="chip chip-time" title="Timp"><span class="chip-ico">⏱️</span> <span id="room-timer">00:00</span></div>
+        <div class="chip chip-hint" title="Indicii folosite"><span class="chip-ico">💡</span> <span id="room-hints">0</span></div>
+        <button class="icon-btn" id="btn-look" title="Unde caut? Arată obiectele câteva secunde" aria-label="Arată obiectele">🔍</button>
+        <button class="icon-btn" id="btn-mute2" title="Sunet pornit/oprit" aria-label="Sunet">🔊</button>
+      </div>
+    </header>
+
+    <div class="story-strip" id="story-strip"></div>
+
+    <div class="stage" id="stage">
+      <div class="stage-inner" id="stage-inner"><!-- SVG-ul scenei --></div>
+    </div>
+
+    <footer class="codebar">
+      <div class="code-block">
+        <span class="lock-count" id="lock-count"></span>
+        <div class="code-slots" id="code-slots" aria-label="Codul lacătului"></div>
+      </div>
+      <button class="btn btn-primary btn-door" id="btn-door" disabled>🔒 Ușa e încuiată</button>
+    </footer>
+  </section>
+
+  <!-- ============================ ECRAN DE VICTORIE ============================ -->
+  <section id="screen-win" class="screen" aria-label="Ai evadat">
+    <div class="stars-bg" aria-hidden="true"></div>
+    <div class="win-wrap">
+      <div class="win-badge" id="win-badge">🎉</div>
+      <h2 class="win-title">Ai evadat!</h2>
+      <p class="win-room" id="win-room"></p>
+      <div class="win-stars" id="win-stars"></div>
+      <div class="win-stats" id="win-stats"></div>
+      <p class="win-fact" id="win-fact"></p>
+      <div class="win-actions">
+        <button class="btn btn-primary" id="btn-next-room">Camera următoare →</button>
+        <button class="btn btn-ghost" id="btn-to-map">Înapoi la hartă</button>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============================ DIPLOMA ============================ -->
+  <section id="screen-diploma" class="screen" aria-label="Diploma">
+    <div class="stars-bg" aria-hidden="true"></div>
+    <div class="diploma-wrap">
+      <div id="diploma-sheet" class="diploma-sheet"></div>
+      <div class="diploma-actions no-print">
+        <button class="btn btn-gold" id="btn-print">🖨️ Printează diploma</button>
+        <button class="btn btn-ghost" id="btn-diploma-back">Înapoi la hartă</button>
+      </div>
+    </div>
+  </section>
+
+</div>
+
+<!-- Fereastra cu proba (puzzle) -->
+<div id="modal-layer" class="modal-layer" hidden>
+  <div class="modal-backdrop" id="modal-backdrop"></div>
+  <div class="modal" role="dialog" aria-modal="true" aria-labelledby="modal-title" id="modal">
+    <button class="modal-close" id="modal-close" aria-label="Închide">✕</button>
+    <div class="modal-head">
+      <div class="modal-icon" id="modal-icon">🧩</div>
+      <div>
+        <h3 class="modal-title" id="modal-title">Proba</h3>
+        <p class="modal-kicker" id="modal-kicker"></p>
+      </div>
+    </div>
+    <div class="modal-body" id="modal-body"></div>
+    <div class="modal-feedback" id="modal-feedback" aria-live="polite"></div>
+    <div class="modal-foot">
+      <button class="btn btn-hint" id="btn-hint">💡 Indiciu</button>
+      <button class="btn btn-primary" id="btn-check">Verifică</button>
+    </div>
+  </div>
+</div>
+
+<canvas id="confetti" class="confetti" aria-hidden="true"></canvas>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<script src="js/utils.js"></script>
+<script src="js/audio.js"></script>
+<script src="js/data.js"></script>
+<script src="js/puzzles.js"></script>
+<script src="js/scenes.js"></script>
+<script src="js/scenegen.js"></script>
+<script src="js/worlds.js"></script>
+<script src="js/rooms.js"></script>
+<script src="js/game.js"></script>
+<script src="js/main.js"></script>
+</body>
+</html>
