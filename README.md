@@ -13,7 +13,8 @@ direct pe GitHub Pages.
 
 ## 🎮 Cum se joacă
 
-1. Copilul își scrie numele și alege clasa (I–II, a III-a sau a IV-a).
+1. Copilul intră cu utilizatorul și parola primite de la profesor, apoi își
+   scrie numele și alege clasa (I–II, a III-a sau a IV-a).
    Nivelul schimbă automat dificultatea calculelor și a întrebărilor.
 2. Alege o lume din bara de sus, apoi o cameră (se poate juca în orice ordine).
 3. În fiecare cameră sunt ascunse **4 obiecte cu probe**. Nu sunt marcate în
@@ -195,7 +196,10 @@ js/
   worlds.js         cele 90 de camere din lumile 2–10 (rețete, cuvinte, curiozități)
   rooms.js          lista completă a camerelor, lumile și camera aleatorie
   game.js           motorul jocului (ecrane, lacăt, stele, diplomă)
+  auth.js           formularul de login, verificarea conturilor și sesiunea
   main.js           pornirea jocului
+tests/
+  auth.browser.cjs  verificarea loginului și a progresului separat pe cont
 .claude/
   launch.json       doar pentru dezvoltare locală (ignorat de GitHub Pages)
 ```
@@ -245,3 +249,41 @@ pentru lumea 1, în `js/worlds.js` pentru celelalte). La fiecare joc se aleg
 - Se respectă `prefers-reduced-motion` (animațiile se opresc).
 - Singura resursă externă sunt fonturile Google (Fredoka + Nunito);
   fără internet, jocul folosește fonturile de sistem și merge la fel.
+
+## 🔑 Acces cu cont
+
+Jocul afișează formularul de login înainte de pornire, inclusiv pentru linkurile
+cu cod de cameră. Sunt configurate cele 20 de conturi user01–user20, cu
+parolele distribuite separat de administrator. Numele contului este normalizat
+la litere mici; parola este sensibilă la litere mari/mici și nu este ajustată.
+
+Sesiunea se păstrează în sessionStorage, rezistă la reîncărcare și expiră după
+8 ore. Butonul **Deconectare** închide sesiunea și oprește jocul. Dacă stocarea
+sesiunii este blocată, accesul durează doar până la reîncărcarea paginii.
+Progresul se salvează local, separat pe cont, pe acest browser și dispozitiv;
+nu se sincronizează între dispozitive. Progresul vechi, fără cont, rămâne
+neatins și nu este atribuit automat niciunui utilizator.
+
+**Limită de securitate:** acesta este un login în browser pentru un site static
+GitHub Pages, nu autentificare sau autorizare pe server. Codul, datele jocului
+și verificatorii parolelor sunt publici, iar bariera poate fi ocolită din
+instrumentele browserului. Hash-urile PBKDF2-SHA-256 (210.000 de iterații, salt
+individual) evită parolele în clar în repository, dar nu fac private fișierele
+și nu împiedică ghicirea offline, în special pentru parole atât de scurte.
+Pentru conținut privat este necesar un backend cu sesiuni și verificări pe server.
+
+Verificarea parolelor folosește Web Crypto: recomandat HTTPS (GitHub Pages)
+sau un server local pe http://localhost:8123. Deschiderea prin file://
+depinde de suportul Web Crypto al browserului.
+### Verificarea loginului
+
+Testul automat necesită Node.js, pachetul `playwright` și Microsoft Edge.
+Instalează dependența de test cu `npm install --no-save --package-lock=false playwright`.
+Setează variabila de mediu `LOGIN_TEST_PASSWORDS` la un șir JSON cu cele 20 de
+parole, în ordinea user01–user20, apoi rulează `node tests/auth.browser.cjs`.
+Nu salva parolele în fișiere urmărite de Git. Pentru Google Chrome, setează
+`TEST_BROWSER_CHANNEL=chrome`; implicit testul folosește `msedge`.
+
+Testul pornește propriul server local și verifică toate conturile, credențialele
+greșite, linkurile cu cod de cameră, refreshul, deconectarea, progresul separat,
+sesiunile expirate sau invalide, afișarea pe telefon și stocarea blocată.

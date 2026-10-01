@@ -892,3 +892,18 @@ button.chip:hover { background: rgba(255,255,255,.2); }
 }
 .lock-count b { color: #fcd34d; }
 .lock-count[hidden] { display: none; }
+
+/* Accesul la joc și contul curent */
+[hidden] { display: none !important; }
+.login-wall { min-height: 100vh; min-height: 100dvh; position: relative; padding: 36px 18px; }
+.login-wrap { position: relative; max-width: 480px; margin: auto; text-align: center; }
+.login-key { font-size: 64px; }
+.login-wrap .title { font-size: clamp(36px, 8vw, 54px); }
+.login-wrap .panel { text-align: left; margin-top: 28px; }
+.login-wrap h2 { margin: 0; font-family: var(--font-title); text-align: center; }
+.login-show { display: flex; align-items: center; gap: 10px; cursor: pointer; }
+.login-show input { width: 20px; height: 20px; accent-color: var(--violet); }
+.login-error { color: #fda4af; margin: 0; font-weight: 700; }
+.login-error:empty { display: none; }
+.login-help { margin: 0; font-size: 14px; color: #d9cffb; text-align: center; }
+.account-bar { display: flex; align-items: center; justify-content: flex-end; flex-wrap: wrap; gap: 12px; padding: 12px 18px; background: var(--bg-0); border-bottom: 1px solid #ffffff20; }

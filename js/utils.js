@@ -187,6 +187,11 @@
   var KEY = 'evadarea-magica-v1';
   var Store = {
     data: null,
+    useAccount: function (username) {
+      if (!/^user(0[1-9]|1[0-9]|20)$/.test(username)) throw new Error('Cont invalid.');
+      KEY = 'evadarea-magica-v1:' + username;
+      this.data = null;
+    },
     defaults: function () {
       return { name: '', level: 2, size: 4, muted: false, avatar: '🙂', rooms: {}, mystery: { plays: 0, stars: 0 } };
     },
