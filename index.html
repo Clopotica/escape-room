@@ -18,7 +18,36 @@
   <div class="noscript">Acest joc are nevoie de JavaScript activat în browser. Te rugăm să îl activezi și să reîncarci pagina.</div>
 </noscript>
 
-<div id="app" class="app">
+<section id="login-wall" class="login-wall" aria-labelledby="login-title">
+  <div class="stars-bg" aria-hidden="true"></div>
+  <div class="login-wrap">
+    <div class="login-key" aria-hidden="true">🗝️</div>
+    <h1 id="login-title" class="title">Evadarea <span>Magică</span></h1>
+    <p class="tagline">Aventura începe cu cheia ta de acces.</p>
+    <form id="login-form" class="panel start-panel">
+      <h2>Intră în cont</h2>
+      <label class="field" for="login-username">
+        <span class="field-label">Utilizator</span>
+        <input id="login-username" class="text-input" name="username" type="text" autocomplete="username" autocapitalize="none" spellcheck="false" placeholder="ex. user01" maxlength="32" required>
+      </label>
+      <label class="field" for="login-password">
+        <span class="field-label">Parolă</span>
+        <input id="login-password" class="text-input" name="password" type="password" autocomplete="current-password" maxlength="128" required aria-describedby="login-help">
+      </label>
+      <label class="login-show"><input id="login-show-password" type="checkbox"> Arată parola</label>
+      <p id="login-error" class="login-error" role="alert" aria-live="polite"></p>
+      <button id="btn-login" class="btn btn-primary" type="submit">Intră în aventură →</button>
+      <p id="login-help" class="login-help">Folosește contul primit de la profesor. Parola ține cont de literele mari și mici.</p>
+    </form>
+  </div>
+</section>
+
+<div id="account-bar" class="account-bar no-print" hidden>
+  <span>Cont: <strong id="account-username"></strong></span>
+  <button id="btn-logout" class="btn btn-ghost btn-small" type="button">Deconectare</button>
+</div>
+
+<div id="app" class="app" hidden>
 
   <!-- ============================ ECRANUL DE START ============================ -->
   <section id="screen-start" class="screen is-active" aria-label="Ecran de start">
@@ -235,6 +264,7 @@
 <script src="js/worlds.js"></script>
 <script src="js/rooms.js"></script>
 <script src="js/game.js"></script>
+<script src="js/auth.js"></script>
 <script src="js/main.js"></script>
 </body>
 </html>
